@@ -1,24 +1,36 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
+import { ApiService } from "./services/ApiService";
+import { EmployeeService } from "./services/EmployeeService";
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+// main.ts - Punto de entrada de la aplicación
+   async function main(): Promise<void> {
+     try {
+       // TODO: Crear instancias de los servicios (inyección de dependencias)
+       const apiService = new ApiService();
+       const employeeService = new EmployeeService(apiService);
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+       // TODO: Cargar empleados desde la API
+       await employeeService.loadEmployeesFromApi();
+
+       // TODO: Mostrar información de todos los empleados
+       const employees = employeeService.getAllEmployees();
+
+        console.log("============ SISTEMA DE EMPLEADOS ==============");
+         // TODO: Mostrar detalles y salarios de cada empleado
+         for (const emp of employees) {
+            console.log(emp.getDetails());    
+            console.log(`Salario: $${emp.calculateSalary()}`); 
+            console.log("------------------------------------");
+
+            
+             
+         }
+
+        // Simular carga desde API
+        employeeService.saveEmployees();
+        // cargar desde localStorage
+        employeeService.loadEmployees();
+     } catch (error) {
+         console.error("Error:", error);
+     }
+   }
+   main();
