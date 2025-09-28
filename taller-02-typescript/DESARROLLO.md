@@ -28,7 +28,8 @@ EmployeeService: administra la lista de empleados,los carga desde la API, busca,
 
 La herencia la utilicé para aprovechar la clase abstracta BaseEmployee. Esta define los atributos básicos de cualquier empleado (id, name, age, email, gender, department) y obliga a las clases hijas a implementar dos métodos:
 
-*Inyección de dependencia*
+**Inyección de dependencia**
+
 En EmployeeService, a través del constructor recibí una instancia de ApiService. Esto permite, separar un servicio para API y otro para empleados.
 
 Hacer el código modular y fácil de probar, ya que EmployeeService no depende directamente de cómo se obtiene la información, solo recibe un servicio que sabe hacerlo.
